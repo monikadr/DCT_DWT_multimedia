@@ -1,5 +1,0 @@
-0	0.09866	file chukwa dir path conf apach log demux org hadoop archiv directori cluster configur process sink time day status 
-1	0.04128	tabl time append end map sql queri messag size log apach partit host format date databas state column jms 
-2	0.13036	record key chukwa apach org hadoop map job time log field reduc processor rio entri rec util put report 
-3	0.1589	apach org file json log metric util http view hadoop chukwa softwar bean xml path append respons permiss request 
-4	0.14159	adaptor chunk chukwa apach agent file org hadoop offset test conf datacollect writer collector log queue configur thread stream 

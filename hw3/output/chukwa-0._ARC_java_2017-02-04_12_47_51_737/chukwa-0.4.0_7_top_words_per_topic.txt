@@ -1,7 +1,0 @@
-0	0.02957	time timestamp op avg block job host path hadoop apach cluster home dfs org starttim endtim read databas rpc 
-1	0.06558	record key chukwa apach reduc map org field time job hadoop log byte processor file entri task extract rec 
-2	0.06013	file chukwa dir path apach conf org hadoop log demux archiv sourc directori test day configur hour cluster root 
-3	0.0471	json apach metric org file append view bean log util size http xml hadoop label softwar context buffer request 
-4	0.06578	adaptor file chukwa apach chunk agent org offset log hadoop collector datacollect thread commit http conf size servlet writer 
-5	0.03983	chunk time apach writer file org log chukwa format end hadoop key stream tabl util date sql calendar current 
-6	0.00593	rio eth pcnt mem cpu busi task hadoop org apach wkbs rkbs util buffer ret filter rti sdd sdc 
