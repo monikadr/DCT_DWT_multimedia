@@ -76,6 +76,11 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:layout_weight="0.08"
+        android:clickable="true"
+        android:clipChildren="true"
+        android:clipToPadding="true"
+        android:contextClickable="true"
+        android:longClickable="true"
         android:weightSum="1">
 
         <ImageView
@@ -84,7 +89,10 @@
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:layout_weight="0.64"
+            android:clickable="true"
             android:contentDescription="Image"
+            android:contextClickable="true"
+            android:longClickable="true"
             android:src="@mipmap/details" />
     </LinearLayout>
 

@@ -13,8 +13,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 /**
  * Created by Monika on 4/12/2017.
@@ -87,22 +90,40 @@ public class postListViewAdaptor extends ArrayAdapter<HashMap<String, String>> {
                 new DownloadImageTask(pp)
                         .execute(url);
 
-            String content = user.get("message");
+                String content = user.get("message");
                 mViewHolder.userName.setText(content);
-            String name = user.get("name");
-            mViewHolder.pname.setText(name);
-            String time = user.get("createdTime");
-            mViewHolder.time.setText(time);
 
 
+                String name = user.get("name");
+                mViewHolder.pname.setText(name);
 
 
-
+                String time = user.get("createdTime");
+                String converted_time = getDate(time);
+                mViewHolder.time.setText(converted_time);
 
 
          }
 
         return convertView;
     }
+    public String getDate(String given_date){
+        SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        java.util.Date date;
+        try
+        {
+            date = form.parse(given_date);
+        }
+        catch (ParseException e)
+        {
+
+            e.printStackTrace();
+            return "";
+        }
+        SimpleDateFormat postFormater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+        String newDateStr = postFormater.format(date);
+        return String.valueOf(newDateStr);
+    }
+
 }
 

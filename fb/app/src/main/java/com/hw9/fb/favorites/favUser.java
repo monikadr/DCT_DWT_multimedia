@@ -1,7 +1,6 @@
 package com.hw9.fb.favorites;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -9,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -74,7 +72,7 @@ public class favUser extends Fragment {
                 listView.setAdapter(adapter);
 
                 //details
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+               /* listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         JSONObject jsonObject = (JSONObject) listView.getItemAtPosition(position);
@@ -83,7 +81,7 @@ public class favUser extends Fragment {
                         intent.putExtra("type","Users");
                         startActivity(intent);
                     }
-                });
+                });*/
             }
 
 

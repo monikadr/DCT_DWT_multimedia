@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getMenu().getItem(0).setChecked(true);
     }
 
     @Override
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_Home) {
             EditText key = (EditText) findViewById(R.id.keyword);
-            Intent intent = new Intent(this, ResultActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("key",key.getText().toString());
             startActivity(intent);
         } else if (id == R.id.nav_Favorites) {
@@ -115,10 +116,10 @@ public class MainActivity extends AppCompatActivity
             if(gps.canGetLocation()){
 
 
-                longitude = -122.084;//gps.getLongitude();
-                latitude = 37.422;//gps .getLatitude();
+                longitude = gps.getLongitude();//-122.084;//
+                latitude = gps .getLatitude();//37.422;//
 
-                Toast.makeText(getApplicationContext(),"Longitude:"+Double.toString(longitude)+"\nLatitude:"+Double.toString(latitude),Toast.LENGTH_SHORT).show();
+              // Toast.makeText(getApplicationContext(),"Longitude:"+Double.toString(longitude)+"\nLatitude:"+Double.toString(latitude),Toast.LENGTH_SHORT).show();
             }
             else
             {

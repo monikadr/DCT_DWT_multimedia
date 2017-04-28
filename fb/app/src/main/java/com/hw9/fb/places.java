@@ -1,7 +1,6 @@
 package com.hw9.fb;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -70,8 +68,8 @@ public class places extends Fragment {
             lat = bundle.getString("lat");
             longitude = bundle.getString("long");
         }
-        url = "http://sample-env-1.xj6ungehth.us-west-2.elasticbeanstalk.com/fb.php?keyword="+key+"&type=Places&lat="+lat+"&long="+longitude;
-
+        url = "http://sample-env.ikykuzxqc3.us-west-2.elasticbeanstalk.com/fb.php?keyword="+key+"&type=Places&lat="+longitude+"&long="+lat;
+        Log.d("url",url);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,10 +83,10 @@ public class places extends Fragment {
         this.view = view;
         Button btn = (Button) getView().findViewById(R.id.previous);
         btn.setEnabled(false);
-
-
-
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+        getData(view);
+    }
+    public void getData(View view){
+       JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
                     @Override
@@ -179,17 +177,8 @@ public class places extends Fragment {
                                 }
                             });
 
-                            //for details
-                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    JSONObject jsonObject = (JSONObject) listView.getItemAtPosition(position);
-                                    Intent intent = new Intent(ctx, userViewDetails.class);
-                                    intent.putExtra("user", String.valueOf(jsonObject));
-                                    intent.putExtra("type","Places");
-                                    startActivity(intent);
-                                }
-                            });
+
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -207,6 +196,12 @@ public class places extends Fragment {
 
         // Access the RequestQueue through your singleton class.
         MySingleton.getInstance(ctx).addToRequestQueue(jsObjRequest);
+     //   Log.d("response",String.valueOf("response"));
+    }
+    public void onResume() {
+        super.onResume();
+        getData(view);
+
     }
 
 }

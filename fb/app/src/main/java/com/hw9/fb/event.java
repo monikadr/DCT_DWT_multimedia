@@ -1,7 +1,6 @@
 package com.hw9.fb;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -81,9 +79,10 @@ public class event extends Fragment {
         this.view = view;
         Button btn = (Button) getView().findViewById(R.id.previous);
         btn.setEnabled(false);
-
-
-
+        getData(view);
+    }
+    public void getData (View view)
+    {
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
@@ -96,97 +95,98 @@ public class event extends Fragment {
                             final ArrayList<JSONObject> jsonObjectsUser3 = new ArrayList<JSONObject>();
                             len = response.getJSONArray("data").length();
 
+                            if (response.getJSONArray("data").length() > 10) {
+                                for (int i = 0; i < 10; i++) {
+                                    jsonObjectsUser.add(response.getJSONArray("data").getJSONObject(i));
+                                }
 
-                            for(int i=0;i<10;i++) {
-                                jsonObjectsUser.add(response.getJSONArray("data").getJSONObject(i));
+                                cur = 10;
+
+                                // display list
+
                             }
-                            // display list
+                            else
+                            {
+                                for (int i = 0; i < response.getJSONArray("data").length(); i++) {
+                                    jsonObjectsUser.add(response.getJSONArray("data").getJSONObject(i));
+                                }
 
+                            }
                             adap = new eventListViewAdapter(ctx, R.id.listView, jsonObjectsUser);
                             listView.setAdapter(adap);
-
-                            cur = 10;
-                            Button next = (Button) getView().findViewById(R.id.next);
-                            next.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Button btn = (Button) getView().findViewById(R.id.previous);
-                                    btn.setEnabled(true);
-                                    if(cur == 10) {
-                                        for (int i = 10; i < 19; i++) {
-                                            try {
-                                                if(jsonObjectsUser2.size()!=10)
-                                                jsonObjectsUser2.add(response.getJSONArray("data").getJSONObject(i));
-
-                                            } catch (JSONException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-                                        adap = new eventListViewAdapter(ctx, R.id.listView, jsonObjectsUser2);
-                                        listView.setAdapter(adap);
-                                        cur = 20;
-                                    }
-                                    else
-                                    if(cur==20)
-                                    {
-                                        try {
-                                            for (int i = 20; i < response.getJSONArray("data").length(); i++) {
+                            if (response.getJSONArray("data").length() < 10)
+                            {
+                                Button next = (Button) getView().findViewById(R.id.next);
+                                next.setEnabled(false);
+                            }
+                            else {
+                                Button next = (Button) getView().findViewById(R.id.next);
+                                next.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Button btn = (Button) getView().findViewById(R.id.previous);
+                                        btn.setEnabled(true);
+                                        if (cur == 10) {
+                                            for (int i = 10; i < 19; i++) {
                                                 try {
-                                                    if(jsonObjectsUser3.size()!=5)
-                                                    jsonObjectsUser3.add(response.getJSONArray("data").getJSONObject(i));
+                                                    if (jsonObjectsUser2.size() != 10)
+                                                        jsonObjectsUser2.add(response.getJSONArray("data").getJSONObject(i));
 
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
                                                 }
                                             }
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
+                                            adap = new eventListViewAdapter(ctx, R.id.listView, jsonObjectsUser2);
+                                            listView.setAdapter(adap);
+                                            cur = 20;
+                                        } else if (cur == 20) {
+                                            try {
+                                                for (int i = 20; i < response.getJSONArray("data").length(); i++) {
+                                                    try {
+                                                        if (jsonObjectsUser3.size() != 5)
+                                                            jsonObjectsUser3.add(response.getJSONArray("data").getJSONObject(i));
+
+                                                    } catch (JSONException e) {
+                                                        e.printStackTrace();
+                                                    }
+                                                }
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                            adap = new eventListViewAdapter(ctx, R.id.listView, jsonObjectsUser3);
+                                            listView.setAdapter(adap);
+                                            Button next = (Button) getView().findViewById(R.id.next);
+                                            next.setEnabled(false);
+                                            cur = 25;
                                         }
-                                        adap = new eventListViewAdapter(ctx, R.id.listView, jsonObjectsUser3);
-                                        listView.setAdapter(adap);
-                                        Button next = (Button) getView().findViewById(R.id.next);
-                                        next.setEnabled(false);
-                                        cur=25;
+
+
                                     }
+                                });
+                                Button previous = (Button) getView().findViewById(R.id.previous);
+                                previous.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Button btn = (Button) getView().findViewById(R.id.next);
+                                        btn.setEnabled(true);
+                                        if (cur == 25) {
+                                            adap = new eventListViewAdapter(ctx, R.id.listView, jsonObjectsUser2);
+                                            listView.setAdapter(adap);
+                                            cur = 20;
+                                        } else if (cur == 20) {
+                                            adap = new eventListViewAdapter(ctx, R.id.listView, jsonObjectsUser);
+                                            listView.setAdapter(adap);
+                                            cur = 10;
+                                            Button previous = (Button) getView().findViewById(R.id.previous);
+                                            previous.setEnabled(false);
+                                        }
 
 
-                                }
-                            });
-                            Button previous = (Button) getView().findViewById(R.id.previous);
-                            previous.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    Button btn = (Button) getView().findViewById(R.id.next);
-                                    btn.setEnabled(true);
-                                    if(cur==25) {
-                                        adap = new eventListViewAdapter(ctx, R.id.listView, jsonObjectsUser2);
-                                        listView.setAdapter(adap);
-                                        cur=20;
                                     }
-                                    else if(cur==20){
-                                        adap = new eventListViewAdapter(ctx, R.id.listView, jsonObjectsUser);
-                                        listView.setAdapter(adap);
-                                        cur=10;
-                                        Button previous = (Button) getView().findViewById(R.id.previous);
-                                        previous.setEnabled(false);
-                                    }
+                                });
 
 
-                                }
-                            });
-
-                            //for details
-                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    JSONObject jsonObject = (JSONObject) listView.getItemAtPosition(position);
-                                    Intent intent = new Intent(ctx, eventViewDetails.class);
-                                    intent.putExtra("user", String.valueOf(jsonObject));
-                                    intent.putExtra("type","Events");
-                                    startActivity(intent);
-                                }
-                            });
-
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -205,8 +205,9 @@ public class event extends Fragment {
         MySingleton.getInstance(ctx).addToRequestQueue(jsObjRequest);
     }
 
-    public interface getDataFromParent{
-        public void getUsersdata(Context ctx, JSONArray jsonArray);
-        public void getUsersdata(Context ctx, ArrayList<JSONObject> legislators);
+    public void onResume() {
+        super.onResume();
+        getData(view);
+
     }
 }

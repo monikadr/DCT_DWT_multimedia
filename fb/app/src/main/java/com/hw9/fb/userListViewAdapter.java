@@ -2,6 +2,7 @@ package com.hw9.fb;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
@@ -44,13 +45,14 @@ public class userListViewAdapter extends ArrayAdapter<JSONObject> {
 
         public TextView pname;
         public TextView time;
+        public ImageView details;
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         //return super.getView(position, convertView, parent);
         ViewHolder mViewHolder = null;
         JSONObject user = null;
@@ -69,7 +71,20 @@ public class userListViewAdapter extends ArrayAdapter<JSONObject> {
             mViewHolder.imageView = (ImageView) convertView.findViewById(R.id.pp);
             mViewHolder.userName = (TextView) convertView.findViewById(R.id.name);
             mViewHolder.fav = (ImageView) convertView.findViewById(R.id.fav);
+            mViewHolder.details = (ImageView) convertView.findViewById(R.id.details);
+              mViewHolder.details.setOnClickListener(new View.OnClickListener() {
 
+                @Override
+                public void onClick(View view) {
+                   // Toast.makeText(getApplicationContext(), "ImageView clicked for the row "+position, Toast.LENGTH_SHORT).show();
+
+                    JSONObject jsonObject = getItem(position);
+                    Intent intent = new Intent(getContext(), userViewDetails.class);
+                     intent.putExtra("user", String.valueOf(jsonObject));
+                    intent.putExtra("type","Users");
+                    getContext().startActivity(intent);
+                }
+            });
 
             convertView.setTag(mViewHolder);
 
@@ -107,12 +122,10 @@ public class userListViewAdapter extends ArrayAdapter<JSONObject> {
             }
 
 
+    }
 
-       //     mViewHolder.wrapper.setBackgroundResource(R.drawable.list_item_background);
-        //   mViewHolder.wrapper.setBackground(getContext().getResources().getDrawable(R.drawable.list_item_background, null));
-         //  mViewHolder.wrapper.setBackgroundResource(R.drawable.list_item_background);
-        }
 
         return convertView;
     }
+
 }

@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_Home"
             android:icon="@mipmap/home"
+            app:itemTextColor="@color/com_facebook_blue"
+            app:itemIconTint="@color/com_facebook_blue"
+            android:fitsSystemWindows="true"
             android:title="Home" />
         <item
             android:id="@+id/nav_Favorites"
-            android:icon="@mipmap/favorites_off"
+            app:itemTextColor="@color/com_facebook_blue"
+            app:itemIconTint="@color/com_facebook_blue"
+            android:icon="@mipmap/favorites_on"
             android:title="Favorites" />
 
 

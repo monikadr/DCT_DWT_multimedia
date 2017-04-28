@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -93,37 +93,59 @@ public class posts extends Fragment {
                         try {
 
                              ArrayList<JSONObject> jsonObjectsUser = new ArrayList<>();
-                            HashMap<String, String> map = new HashMap<String, String>();
+
 
                             if(response.has("posts")) {
                                 for (int i = 0; i < response.getJSONObject("posts").getJSONArray("data").length(); i++) {
+                                    HashMap<String, String> map = new HashMap<String, String>();
                                     jsonObjectsUser.add(response.getJSONObject("posts").getJSONArray("data").getJSONObject(i));
                                     JSONObject jsject = response.getJSONObject("posts").getJSONArray("data").getJSONObject(i);
+                                    if(jsject.has("message")||jsject.has("story")){
                                     map.put("name", response.getString("name"));
                                     map.put("url",response.getString("id"));
                                     map.put("createdTime", jsject.getString("created_time"));
-                                    map.put("message", jsject.getString("message"));
+                                        if(jsject.has("message"))
+                                        {
+                                   map.put("message", jsject.getString("message"));}
+                                        else
+                                            if(jsject.has("story"))
+                                            {
+                                                map.put("message", jsject.getString("story"));
+                                            }
+                                            else
+                                            {
+                                                map.put("message",null);
+                                            }
+                                  //  Log.d("map",String.valueOf(map));
+
+
 
                                     // Set the JSON Objects into the array
-                                    arraylistUncollected.add(map);
+                                    arraylistUncollected.add(map);}
+                                   // Log.d("array",String.valueOf(arraylistUncollected));
                                 }
+
                             }
 
                             // display list
                             if(response.has("posts")) {
 
+
                                 adap = new postListViewAdaptor(ctx, R.id.postView, arraylistUncollected);
                                 listView.setAdapter(adap);
                             }
                             else {
-
+                                TextView not = (TextView)getView().findViewById(R.id.not);
+                                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams)not.getLayoutParams();
+                                params.setMargins(0, 0, 0, 0); //substitute parameters for left, top, right, bottom
+                                not.setLayoutParams(params);
                                 //noAlbum details = new noAlbum();
-                                noPosts po = new noPosts();
-                                FragmentManager fragmentManager = getFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                fragmentTransaction.replace(android.R.id.content, po);
+                               // noPosts po = new noPosts();
+                                //FragmentManager fragmentManager = getFragmentManager();
+                                //FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                //fragmentTransaction.replace(android.R.id.content, po);
                                 // fragmentTransaction.hide(po);
-                                fragmentTransaction.commit();
+                                //fragmentTransaction.commit();
 
                             }
 
@@ -144,4 +166,5 @@ public class posts extends Fragment {
         // Access the RequestQueue through your singleton class.
         MySingleton.getInstance(ctx).addToRequestQueue(jsObjRequest);
     }
+
 }

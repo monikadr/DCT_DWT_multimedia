@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -104,8 +103,14 @@ public class album  extends Fragment {
                                         listDataHeader.add(jsonObjectsAlbum.getString("name"));
 
                                         List<String> albumPhoto = new ArrayList<String>();
+                                        if(jsonObjectsAlbum.has("photos")){
                                         for (int j = 0; j < jsonObjectsAlbum.getJSONObject("photos").getJSONArray("data").length(); j++) {
                                             albumPhoto.add(jsonObjectsAlbum.getJSONObject("photos").getJSONArray("data").getJSONObject(j).getString("id"));
+                                            }
+                                        }
+                                        else
+                                        {
+                                            albumPhoto.add(null);
                                         }
                                         listDataChild.put(listDataHeader.get(i), albumPhoto);
                                     }
@@ -116,14 +121,18 @@ public class album  extends Fragment {
                                     listView.setAdapter(adap);
                                 } else {
 
-                                    noAlbum details = new noAlbum();
-                                    noPosts po = new noPosts();
-                                    FragmentManager fragmentManager = getFragmentManager();
-                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                    fragmentTransaction.replace(android.R.id.content, details);
+                                    TextView no = (TextView)getView().findViewById(R.id.no);
+                                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams)no.getLayoutParams();
+                                    params.setMargins(0, 0, 0, 0); //substitute parameters for left, top, right, bottom
+                                    no.setLayoutParams(params);
+                                    //  noAlbum details = new noAlbum();
+                                   // noPosts po = new noPosts();
+                                   // FragmentManager fragmentManager = getFragmentManager();
+                                   // FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                   // fragmentTransaction.replace(android.R.id.content, details);
                                     // fragmentTransaction.hide(po);
-                                    fragmentTransaction.commit();
-                                }
+                                    //fragmentTransaction.commit();
+                               }
 
 
                         } catch (JSONException e) {

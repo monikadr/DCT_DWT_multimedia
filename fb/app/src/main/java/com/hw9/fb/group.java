@@ -1,7 +1,6 @@
 package com.hw9.fb;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -81,8 +79,9 @@ public class group extends Fragment {
         this.view = view;
         Button btn = (Button) getView().findViewById(R.id.previous);
         btn.setEnabled(false);
-
-
+        getData(view);
+    }
+    public void getData(View view){
 
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -175,17 +174,7 @@ public class group extends Fragment {
                                 }
                             });
 
-                            //for details
-                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    JSONObject jsonObject = (JSONObject) listView.getItemAtPosition(position);
-                                    Intent intent = new Intent(ctx, userViewDetails.class);
-                                    intent.putExtra("user", String.valueOf(jsonObject));
-                                    intent.putExtra("type","Groups");
-                                    startActivity(intent);
-                                }
-                            });
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -205,8 +194,9 @@ public class group extends Fragment {
         MySingleton.getInstance(ctx).addToRequestQueue(jsObjRequest);
     }
 
-    public interface getDataFromParent{
-        public void getUsersdata(Context ctx, JSONArray jsonArray);
-        public void getUsersdata(Context ctx, ArrayList<JSONObject> legislators);
+    public void onResume() {
+        super.onResume();
+        getData(view);
+
     }
 }

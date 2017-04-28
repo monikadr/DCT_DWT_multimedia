@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
-import android.widget.Toast;
 
 /**
  * Created by Monika on 4/12/2017.
@@ -51,6 +50,7 @@ public class trackGPS extends Service implements LocationListener {
             locationManager = (LocationManager) mContext
                     .getSystemService(LOCATION_SERVICE);
 
+
             // getting GPS status
             checkGPS = locationManager
                     .isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -60,12 +60,12 @@ public class trackGPS extends Service implements LocationListener {
                     .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
             if (!checkGPS && !checkNetwork) {
-                Toast.makeText(mContext, "No Service Provider Available", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(mContext, "No Service Provider Available", Toast.LENGTH_SHORT).show();
             } else {
                 this.canGetLocation = true;
                 // First get location from Network Provider
                 if (checkNetwork) {
-                    Toast.makeText(mContext, "Network", Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(mContext, "Network", Toast.LENGTH_SHORT).show();
 
                     try {
                         locationManager.requestLocationUpdates(
@@ -91,9 +91,10 @@ public class trackGPS extends Service implements LocationListener {
             }
             // if GPS Enabled get lat/long using GPS Services
             if (checkGPS) {
-                Toast.makeText(mContext,"GPS",Toast.LENGTH_SHORT).show();
+               // Toast.makeText(mContext,"GPS",Toast.LENGTH_SHORT).show();
                 if (loc == null) {
                     try {
+
                         locationManager.requestLocationUpdates(
                                 LocationManager.GPS_PROVIDER,
                                 MIN_TIME_BW_UPDATES,
@@ -180,7 +181,9 @@ public class trackGPS extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-
+        this.loc = location;
+        getLatitude();
+        getLongitude();
     }
 
     @Override

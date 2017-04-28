@@ -21,7 +21,7 @@ public class eventViewDetails extends AppCompatActivity {
     JSONObject jsonObject = null;
     favorite_manage favMan = null;
     fbshare share = null;
-    String url,type;
+    String url,type,name;
     JSONObject user;
     int key;
     String uid;
@@ -51,6 +51,8 @@ public class eventViewDetails extends AppCompatActivity {
         }
         try {
             uid = user.getString("id");
+            name = user.getString("name");
+            url = user.getJSONObject("picture").getJSONObject("data").getString("url");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -83,7 +85,22 @@ public class eventViewDetails extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+        MenuItem fav = menu.findItem(R.id.favo);
+        MenuItem favn = menu.findItem(R.id.favno);
+        if(favMan.isFavorited(type,uid))
+        {
+            fav.setVisible(false);
+            favn.setVisible(true);
+        }
+        else
+        {
+            fav.setVisible(true);
+            favn.setVisible(false);
+        }
+        return true;
+    }
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -93,12 +110,20 @@ public class eventViewDetails extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.favo) {
             favMan.addToFavorites(type,uid,user);
-            Toast.makeText(eventViewDetails.this, "Added to Favorites", Toast.LENGTH_SHORT).show();
+            Toast.makeText(eventViewDetails.this, "Added to Favorites!!", Toast.LENGTH_SHORT).show();
 
             return true;
         }
+        if (id == R.id.favno) {
+            favMan.removeFromFavorites(type,uid);
+            Toast.makeText(eventViewDetails.this, "Removed from Favorites!!", Toast.LENGTH_SHORT).show();
+            onRestart();
+            return true;
+        }
         if (id == R.id.share) {
-            Intent intent = new Intent(ctx,fbshare.class);
+            Intent intent = new Intent(eventViewDetails.this,fbshare.class);
+            intent.putExtra("id",url);
+            intent.putExtra("name",name);
             startActivity(intent);
         }
 

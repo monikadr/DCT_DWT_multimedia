@@ -5,6 +5,16 @@
     android:orientation="vertical"
     android:background="#f4f4f4" >
 
+    <TextView
+        android:id="@+id/no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-35dp"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:text="No album available to display" />
+
     <ExpandableListView
         android:id="@+id/lvExp"
         android:layout_height="match_parent"

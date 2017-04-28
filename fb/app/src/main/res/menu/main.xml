@@ -7,6 +7,12 @@
         android:title="Add To Favorites"
         app:showAsAction="never" />
     <item
+        android:id="@+id/favno"
+        android:orderInCategory="100"
+        android:title="Remove from Favorites"
+        android:visible="false"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/share"
         android:orderInCategory="100"
         android:title="Share"

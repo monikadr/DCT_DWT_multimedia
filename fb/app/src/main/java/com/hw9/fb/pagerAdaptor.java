@@ -18,6 +18,7 @@ public class pagerAdaptor extends FragmentStatePagerAdapter {
         super(fm);
         fragmentBundle = data;
         this.mNumOfTabs = NumOfTabs;
+
     }
     public pagerAdaptor(FragmentManager fm) {
         super(fm);
@@ -51,10 +52,13 @@ public class pagerAdaptor extends FragmentStatePagerAdapter {
                 return tab5;
 
             default:
-                return new user();
+                return null;
         }
     }
-
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
     @Override
     public int getCount() {
         return mNumOfTabs;

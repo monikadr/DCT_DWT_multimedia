@@ -39,7 +39,7 @@ public class userAlbumDetailsAdaptor extends FragmentStatePagerAdapter {
                 return tab2;
 
             default:
-                return new user();
+                return new album();
         }
     }
 

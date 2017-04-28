@@ -17,7 +17,10 @@ import android.widget.TextView;
 
 public class noAlbum extends Fragment {
     ActionBar mActionBar;
+    private static final String PERSISTENT_VARIABLE_BUNDLE_KEY = "persistentVariable";
+    View rootView;
     ViewPager mPager;
+    userAlbumDetailsAdaptor adapter;
     TabLayout.Tab tab;
     private static Context ctx;
     TextView text;
@@ -29,10 +32,20 @@ public class noAlbum extends Fragment {
         if (myInstance != null) return myInstance;
         myInstance = new noAlbum();
         return myInstance;
+
+    }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+        //initialize viewpager adapter here
+        this.adapter = new userAlbumDetailsAdaptor(getChildFragmentManager());
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.no_album, container, false);
+         rootView = inflater.inflate(R.layout.no_album, container, false);
+       // mPager = (ViewPager) getView().findViewById(R.id.view_pager);
+        //mPager.setOffscreenPageLimit(0);
+
         return rootView;
     }
 

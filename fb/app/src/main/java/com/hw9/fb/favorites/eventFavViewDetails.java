@@ -1,6 +1,7 @@
 package com.hw9.fb.favorites;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import com.hw9.fb.R;
 import com.hw9.fb.eventAlbumDetailsAdaptor;
 import com.hw9.fb.favorite_manage;
+import com.hw9.fb.fbshare;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,7 +25,7 @@ import org.json.JSONObject;
 public class eventFavViewDetails extends AppCompatActivity {
     JSONObject jsonObject = null;
     favorite_manage favMan = null;
-    String url,type;
+    String url,type,name;
     JSONObject user;
     int key;
     String uid;
@@ -51,6 +53,9 @@ public class eventFavViewDetails extends AppCompatActivity {
         }
         try {
             uid = user.getString("id");
+            name = user.getString("name");
+            url = user.getJSONObject("picture").getJSONObject("data").getString("url");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -83,7 +88,22 @@ public class eventFavViewDetails extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.fav_menu, menu);
         return true;
     }
-
+    public boolean onPrepareOptionsMenu(Menu menu)
+    {
+        MenuItem fav = menu.findItem(R.id.favo);
+        MenuItem favn = menu.findItem(R.id.favno);
+        if(favMan.isFavorited(type,uid))
+        {
+            fav.setVisible(false);
+            favn.setVisible(true);
+        }
+        else
+        {
+            fav.setVisible(true);
+            favn.setVisible(false);
+        }
+        return true;
+    }
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -91,18 +111,26 @@ public class eventFavViewDetails extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.favo) {
+        if (id == R.id.favno) {
             favMan.removeFromFavorites(type,uid);
             Toast.makeText(eventFavViewDetails.this, "Removed from Favorites", Toast.LENGTH_SHORT).show();
 
             return true;
         }
         if (id == R.id.share) {
-
+            Intent intent = new Intent(eventFavViewDetails.this,fbshare.class);
+            intent.putExtra("id",url);
+            intent.putExtra("name",name);
+            startActivity(intent);
             return true;
         }
 
-
+        if (id == R.id.favo) {
+            favMan.addToFavorites(type,uid,user);
+            Toast.makeText(eventFavViewDetails.this, "Added to Favorites!!", Toast.LENGTH_SHORT).show();
+            onRestart();
+            return true;
+        }
         if(id==android.R.id.home){
             onBackPressed();
             return true;

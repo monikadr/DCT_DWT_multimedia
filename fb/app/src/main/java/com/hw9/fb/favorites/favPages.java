@@ -1,7 +1,6 @@
 package com.hw9.fb.favorites;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -10,7 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -74,7 +72,7 @@ public class favPages extends Fragment {
                 listView = (ListView) view.findViewById(R.id.listView);
                 listView.setAdapter(adapter);
 
-                //details
+                /*//details
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -84,7 +82,7 @@ public class favPages extends Fragment {
                         intent.putExtra("type","Pages");
                         startActivity(intent);
                     }
-                });
+                });*/
             }
 
 
