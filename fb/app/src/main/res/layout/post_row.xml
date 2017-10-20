@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/wrapper"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/list_item_background"
+    android:clickable="false"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:contextClickable="false"
+    android:longClickable="false"
+    android:orientation="vertical"
+    android:paddingBottom="10dp">
+
+    <ImageView
+        android:id="@+id/photo"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginRight="10dp"
+        app:srcCompat="@mipmap/albums" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:clickable="false"
+        android:clipChildren="false"
+
+        android:layout_toRightOf="@+id/photo"
+        android:clipToPadding="false"
+        android:contextClickable="false"
+        android:longClickable="false"
+        android:orientation="vertical"
+        >
+
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="TextView"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="TextView"
+            android:textColor="#000000"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:contextClickable="false"
+            android:includeFontPadding="true"
+            android:linksClickable="false"
+            android:longClickable="false"
+            android:text="name full"
+            android:textColor="@android:color/background_dark"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+</RelativeLayout>
